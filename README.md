@@ -1,6 +1,6 @@
-# react-demo
+# React全家桶教程 （react、webpack、babel、react-route、redux、redux-saga）
 
-react 全家桶从 0 到 1(最新教程)
+react 全家桶从 0 到 1(最新)
 本文从零开始，逐步讲解如何用 react 全家桶搭建一个完整的 react 项目。文中针对 react、webpack、babel、react-route、redux、redux-saga 的核心配置会加以讲解，希望通过这个项目，可以系统的了解 react 技术栈的主要知识，避免搭建一次后面就忘记的情况。
 
 代码库：https://github.com/Fatejian/react-demo
@@ -123,15 +123,15 @@ babel-loader：使用 Babel 转换 JavaScript 依赖关系的 Webpack 加载器,
 更新 webpack.config.js
 ```javascript
 module: {
-rules: [
-{
-test: /\.js$/, // 匹配.js 文件
-exclude: /node_modules/,
-use: {
-loader: 'babel-loader'
-}
-}
-]
+  rules: [
+    {
+      test: /\.js$/, // 匹配.js 文件
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader'
+      }
+    }
+  ]
 }
 ```
 根目录下创建并配置.babelrc 文件
@@ -155,29 +155,29 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-entry: './app.js',
-output: {
-path: path.resolve(**dirname, 'dist'),
-filename: 'my-first-webpack.bundle.js'
-},
-mode: 'development',
-module: {
-rules: [
-{
-test: /\.js$/,
-exclude: /node_modules/,
-use: {
-loader: 'babel-loader'
-}
-}
-]
-},
-plugins: [
-new HtmlWebPackPlugin({
-template: './index.html',
-filename: path.resolve(**dirname, 'dist/index.html')
-})
-]
+  entry: './app.js',
+  output: {
+    path: path.resolve(**dirname, 'dist'),
+    filename: 'my-first-webpack.bundle.js'
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader'
+      }
+    }
+    ]
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './index.html',
+      filename: path.resolve(**dirname, 'dist/index.html')
+    })
+  ]
 };
 ```
 更新 package.json 文件
@@ -205,17 +205,17 @@ npm i webpack-dev-server -D
 webpack.config.js 新增 devServer 配置
 ```js
 devServer: {
-hot: true, // 热替换
-contentBase: path.join(**dirname, 'dist'), // server 文件的根目录
-compress: true, // 开启 gzip
-port: 8080, // 端口
+  hot: true, // 热替换
+  contentBase: path.join(**dirname, 'dist'), // server 文件的根目录
+  compress: true, // 开启 gzip
+  port: 8080, // 端口
 },
 plugins: [
-new webpack.HotModuleReplacementPlugin(), // HMR 允许在运行时更新各种模块，而无需进行完全刷新
-new HtmlWebPackPlugin({
-template: './index.html',
-filename: path.resolve(**dirname, 'dist/index.html')
-})
+  new webpack.HotModuleReplacementPlugin(), // HMR 允许在运行时更新各种模块，而无需进行完全刷新
+  new HtmlWebPackPlugin({
+    template: './index.html',
+    filename: path.resolve(**dirname, 'dist/index.html')
+  })
 ]
 ```
 引入 redux
@@ -234,26 +234,26 @@ npm i redux react-redux -D
 在 actions 文件夹下创建 index.js 文件
 ```js
 export const increment = () => {
-return {
-type: 'INCREMENT',
-};
+  return {
+    type: 'INCREMENT',
+  };
 };
 ```
 在 reducers 文件夹下创建 index.js 文件
 ```js
 const initialState = {
-number: 0
+  number: 0
 };
 
 const incrementReducer = (state = initialState, action) => {
-switch(action.type) {
-case 'INCREMENT': {
-state.number += 1
-return { ...state }
-break
-};
-default: return state;
-}
+  switch(action.type) {
+    case 'INCREMENT': {
+      state.number += 1
+        return { ...state }
+      break
+    };
+    default: return state;
+  }
 };
 export default incrementReducer;
 ```
@@ -276,7 +276,7 @@ import { Provider } from 'react-redux';
 
 ReactDom.render(
 <Provider store={store}>
-<App />
+  <App />
 </Provider>
 , document.getElementById('root'));
 ```
@@ -300,7 +300,6 @@ class App extends React.Component {
         return (
             <div>
                 <div>current number： {this.props.number} <button onClick={()=>this.onClick()}>点击+1</button></div>
-
             </div>
         );
     }
@@ -308,8 +307,8 @@ class App extends React.Component {
 }
 export default connect(
 state => ({
-number: state.number
-})
+  number: state.number
+  })
 )(App);
 ```
 点击旁边的数字会不断地+1
@@ -329,12 +328,12 @@ import { delay } from 'redux-saga'
 import { put, takeEvery } from 'redux-saga/effects'
 
 export function\* incrementAsync() {
-yield delay(2000)
-yield put({ type: 'INCREMENT' })
+  yield delay(2000)
+  yield put({ type: 'INCREMENT' })
 }
 
 export function\* watchIncrementAsync() {
-yield takeEvery('INCREMENT_ASYNC', incrementAsync)
+  yield takeEvery('INCREMENT_ASYNC', incrementAsync)
 }
 ```
 解释下所做的事情，将 watchIncrementAsync 理解为一个 saga，在这个 saga 中监听了名为 INCREMENT_ASYNC 的 action，当 INCREMENT_ASYNC 被 dispatch 时，会调用 incrementAsync 方法，在该方法中做了异步操作，然后将结果传给名为 INCREMENT 的 action 进而更新 store。
@@ -386,8 +385,8 @@ class App extends React.Component {
 
 }
 export default connect(
-state => ({
-number: state.number
+  state => ({
+  number: state.number
 })
 )(App);
 ```
@@ -418,18 +417,17 @@ Babel 插件一般尽可能拆成小的力度，开发者可以按需引进。�
 更新.babelrc 文件配置，支持 genrator
 ```json
 {
-"presets": ["@babel/preset-env", "@babel/preset-react"],
-"plugins": [
-[
-"@babel/plugin-transform-runtime",
-{
-"corejs": false,
-"helpers": true,
-"regenerator": true,
-"useESModules": false
-}
-]
-]
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    ["@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
+  ]
 }
 ```
 
@@ -455,13 +453,13 @@ const Users = () => <h2>页面二</h2>;
 
 ReactDom.render(
 <Provider store={store}>
-<Router>
-<Switch>
-<Route path="/" exact component={App} />
-<Route path="/about/" component={About} />
-<Route path="/users/" component={Users} />
-</Switch>
-</Router>
+  <Router>
+    <Switch>
+      <Route path="/" exact component={App} />
+      <Route path="/about/" component={About} />
+      <Route path="/users/" component={Users} />
+    </Switch>
+  </Router>
 </Provider>
 , document.getElementById('root'));
 ```
