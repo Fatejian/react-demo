@@ -37,11 +37,11 @@ touch webpack.config.js
 const path = require('path');
 
 module.exports = {
-entry: './app.js', // 入口文件
-output: {
-path: path.resolve(\_\_dirname, 'dist'), // 定义输出目录
-filename: 'my-first-webpack.bundle.js' // 定义输出文件名称
-}
+  entry: './app.js', // 入口文件
+  output: {
+    path: path.resolve(__dirname, 'dist'), // 定义输出目录
+    filename: 'my-first-webpack.bundle.js' // 定义输出文件名称
+  }
 };
 ```
 
@@ -327,12 +327,12 @@ npm i redux-saga -D
 import { delay } from 'redux-saga'
 import { put, takeEvery } from 'redux-saga/effects'
 
-export function\* incrementAsync() {
+export function* incrementAsync() {
   yield delay(2000)
   yield put({ type: 'INCREMENT' })
 }
 
-export function\* watchIncrementAsync() {
+export function* watchIncrementAsync() {
   yield takeEvery('INCREMENT_ASYNC', incrementAsync)
 }
 ```
@@ -386,7 +386,7 @@ class App extends React.Component {
 }
 export default connect(
   state => ({
-  number: state.number
+    number: state.number
 })
 )(App);
 ```
@@ -498,7 +498,6 @@ class App extends React.Component {
                     </li>
                     </ul>
                 </nav>
-
                 <br/>
                 <div>redux & redux-saga测试</div>
                 <div>current number： {this.props.number} <button onClick={()=>this.onClick()}>点击+1</button></div>
@@ -509,9 +508,9 @@ class App extends React.Component {
 
 }
 export default connect(
-state => ({
-number: state.number
-})
+  state => ({
+    number: state.number
+  })
 )(App);
 ```
 点击列表可以跳转相关路由
