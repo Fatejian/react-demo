@@ -1,4 +1,8 @@
+// .prettierrc.js
 module.exports = {
-    "printWidth": 120, //一行的字符数，如果超过会进行换行，默认为80
-    "tabWidth": 2, //一个tab代表几个空格数，默认为2
-  }
+  singleQuote: true, // 平常模式使用单引号
+  trailingComma: 'es5', // 末尾属性添加,
+  tabWidth: 2, // tab 为2个空格长度
+  semi: false, // 不需要分号
+  printWidth: 120, // 单行长度
+}
