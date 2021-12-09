@@ -161,6 +161,11 @@ module.exports = {
     })
   ]
 };
+
+更新package.json文件
+
+"start": "./node_modules/.bin/webpack --config webpack.config.js"
+
 执行 npm run start，生成 dist文件夹
 
 当前目录结构如下
