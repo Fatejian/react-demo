@@ -1,6 +1,7 @@
 # React全家桶教程 （react、webpack、babel、react-route、redux、redux-saga）
 
 react 全家桶从 0 到 1(最新)
+
 本文从零开始，逐步讲解如何用 react 全家桶搭建一个完整的 react 项目。文中针对 react、webpack、babel、react-route、redux、redux-saga 的核心配置会加以讲解，希望通过这个项目，可以系统的了解 react 技术栈的主要知识，避免搭建一次后面就忘记的情况。
 
 代码库：https://github.com/Fatejian/react-demo
@@ -137,7 +138,7 @@ module: {
 根目录下创建并配置.babelrc 文件
 ```json
 {
-"presets": ["@babel/preset-env", "@babel/preset-react"]
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
 }
 ```
 配置 HtmlWebPackPlugin
@@ -206,7 +207,11 @@ webpack.config.js 新增 devServer 配置
 ```js
 devServer: {
   hot: true, // 热替换
-  contentBase: path.join(**dirname, 'dist'), // server 文件的根目录
+  // contentBase: path.join(**dirname, 'dist'), // server 文件的根目录
+  // 当项目中使用的是webpack5以上的版本时： contentBase 这个属性在新版的webpack-dev-server中被移除了, 取而代之的是以下这种
+  static: {
+    directory: path.join(__dirname, 'dist'), // server文件的根目录
+  },
   compress: true, // 开启 gzip
   port: 8080, // 端口
 },
@@ -324,7 +329,12 @@ npm i redux-saga -D
 ```
 新建 src/sagas/index.js 文件
 ```js
-import { delay } from 'redux-saga'
+// 在0.x 版本中，你应该这样导入:
+// import { delay } from 'redux-saga' 
+
+// 在1.0.0版本中，你应该这样导入:
+import {delay} from 'redux-saga/effects'
+
 import { put, takeEvery } from 'redux-saga/effects'
 
 export function* incrementAsync() {
@@ -446,22 +456,24 @@ import ReactDom from 'react-dom';
 import React from 'react';
 import store from './src/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const About = () => <h2>页面一</h2>;
 const Users = () => <h2>页面二</h2>;
 
 ReactDom.render(
-<Provider store={store}>
-  <Router>
-    <Switch>
-      <Route path="/" exact component={App} />
-      <Route path="/about/" component={About} />
-      <Route path="/users/" component={Users} />
-    </Switch>
-  </Router>
-</Provider>
-, document.getElementById('root'));
+  <Provider store={store}>
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/about/" element={<About />} />
+        <Route path="/users/" element={<Users />} />
+      </Routes>
+    </Router>
+  </Provider>,
+  document.getElementById('root'),
+);
+
 ```
 更新 App 组件，展示路由效果
 ```js

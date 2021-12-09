@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
@@ -9,6 +10,14 @@ module.exports = {
     filename: 'my-first-webpack.bundle.js',
   },
   mode: 'development',
+  devServer: {
+    hot: true, // 热替换
+    static: {
+      directory: path.join(__dirname, 'dist'), // server文件的根目录
+    },
+    compress: true, // 开启gzip
+    port: 8080, // 端口
+  },
   module: {
     rules: [
       {
@@ -20,14 +29,8 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    hot: true, // 热替换
-    contentBase: path.join(__dirname, 'dist'), // server文件的根目录
-    compress: true, // 开启gzip
-    port: 8080, // 端口
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(), // HMR允许在运行时更新各种模块，而无需进行完全刷新
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebPackPlugin({
       template: './index.html',
       filename: path.resolve(__dirname, 'dist/index.html'),
