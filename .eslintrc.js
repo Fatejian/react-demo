@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['airbnb', 'prettier', 'prettier/react'],
+  extends: ['airbnb', 'prettier'],
   plugins: ['prettier', 'redux-saga', 'react', 'react-hooks', 'jsx-ally'],
   env: {
     jest: true,
